@@ -47,7 +47,7 @@ class _DoctorListViewBuilderState extends State<DoctorListViewBuilder> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               focusColor: Colors.transparent,
-              onTap: () {
+              onDoubleTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => DetailsPage(doctor: doctorData),
@@ -56,11 +56,17 @@ class _DoctorListViewBuilderState extends State<DoctorListViewBuilder> {
                 debugPrint('Tapped on ${doctorData['name']}');
               },
               child: CardOfDoctor(
+                docId: docs[index].id,
                 name: doctorData['name'] ?? 'name is missing',
                 specialization:
                     doctorData['specialization'] ?? 'specialization is missing',
                 location: doctorData['location'] ?? 'location is missing',
                 imagePath: doctorData['imagePath'] ?? '',
+                contact: doctorData['contact']?.toString() ?? '',
+                rating: doctorData['rating'] ?? 0,
+                experience: doctorData['experience'] ?? 0,
+                reviews: doctorData['reviews'] ?? 0,
+                clinicFees: doctorData['clinicfees'] ?? 0,
               ),
             );
           },

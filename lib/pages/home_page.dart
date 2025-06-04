@@ -45,6 +45,8 @@ Future<void> addDoctorsData() async {
       'reviews': 120,
       'contact': '+20 123 456 7890',
       'clinicfees': 100,
+      'frontend': [],
+      'backend': [],
     },
     {
       'name': 'Dr. Jane Smith',
@@ -56,6 +58,8 @@ Future<void> addDoctorsData() async {
       'reviews': 90,
       'contact': '+20 987 654 3210',
       'clinicfees': 80,
+      'frontend': [],
+      'backend': [],
     },
     {
       'name': 'Dr. Emily Johnson',
@@ -67,6 +71,8 @@ Future<void> addDoctorsData() async {
       'reviews': 150,
       'contact': '+20 555 555 5555',
       'clinicfees': 120,
+      'frontend': [],
+      'backend': [],
     },
     {
       'name': 'Dr. Michael Brown',
@@ -78,6 +84,8 @@ Future<void> addDoctorsData() async {
       'reviews': 180,
       'contact': '+20 777 777 7777',
       'clinicfees': 110,
+      'frontend': [],
+      'backend': [],
     },
     {
       'name': 'Dr. Sarah Wilson',
@@ -89,6 +97,8 @@ Future<void> addDoctorsData() async {
       'reviews': 70,
       'contact': '+20 888 888 8888',
       'clinicfees': 90,
+      'frontend': [],
+      'backend': [],
     },
     {
       'name': 'Dr. David Lee',
@@ -100,6 +110,8 @@ Future<void> addDoctorsData() async {
       'reviews': 130,
       'contact': '+20 999 999 9999',
       'clinicfees': 85,
+      'frontend': [],
+      'backend': [],
     },
   ];
 
@@ -180,12 +192,198 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 30),
             SpecializationListViewBuilder(items: items),
             const SizedBox(height: 30),
-            Text(
-              'Top Doctors',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Top Doctors',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    final CollectionReference doctors = FirebaseFirestore
+                        .instance
+                        .collection('doctors');
+                    TextEditingController nameController =
+                        TextEditingController();
+                    TextEditingController specializationController =
+                        TextEditingController();
+                    TextEditingController locationController =
+                        TextEditingController();
+                    TextEditingController contactController =
+                        TextEditingController();
+                    TextEditingController imagePathController =
+                        TextEditingController();
+                    TextEditingController ratingController =
+                        TextEditingController();
+                    TextEditingController experienceController =
+                        TextEditingController();
+                    TextEditingController reviewsController =
+                        TextEditingController();
+                    TextEditingController clinicFeesController =
+                        TextEditingController();
+
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: const Text('Add Doctor'),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    controller: nameController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Name',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: specializationController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Specialization',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: locationController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Location',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: contactController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Contact',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: imagePathController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Image Path',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: ratingController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Rating',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: experienceController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Experience',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: reviewsController,
+                                    style: const TextStyle(color: Colors.black),
+
+                                    decoration: const InputDecoration(
+                                      labelText: 'Reviews',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: clinicFeesController,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Clinic Fees',
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            final String name =
+                                                nameController.text;
+                                            final String specialization =
+                                                specializationController.text;
+                                            final String location =
+                                                locationController.text;
+                                            final String contact =
+                                                contactController.text;
+                                            final String imagePath =
+                                                imagePathController.text;
+                                            final double rating = double.parse(
+                                              ratingController.text,
+                                            );
+                                            final int experience = int.parse(
+                                              experienceController.text,
+                                            );
+                                            final int reviews = int.parse(
+                                              reviewsController.text,
+                                            );
+                                            final int clinicFees = int.parse(
+                                              clinicFeesController.text,
+                                            );
+                                            try {
+                                              final docRef = await doctors.add({
+                                                'name': name,
+                                                'specialization':
+                                                    specialization,
+                                                'location': location,
+                                                'contact': contact,
+                                                'imagePath': imagePath,
+                                                'rating': rating,
+                                                'experience': experience,
+                                                'reviews': reviews,
+                                                'clinicFees': clinicFees,
+                                              });
+                                              debugPrint(
+                                                'added successfully ${docRef.id}',
+                                              );
+                                            } catch (e) {
+                                              debugPrint(
+                                                'error ${e.toString()}',
+                                              );
+                                            }
+
+                                            nameController.clear();
+                                            specializationController.clear();
+                                            locationController.clear();
+                                            contactController.clear();
+                                            imagePathController.clear();
+                                            ratingController.clear();
+                                            experienceController.clear();
+                                            reviewsController.clear();
+                                            clinicFeesController.clear();
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Add'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: [],
+                          ),
+                    );
+                  },
+                  icon: const Icon(Icons.add, size: 30, color: Colors.white),
+                ),
+              ],
             ),
             Expanded(child: DoctorListViewBuilder()),
           ],
